@@ -7,17 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.Console;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 @Controller
 public class ForecastController {
     @GetMapping("/")
-    public ModelAndView index() {
+    public ModelAndView index() throws IOException {
         ModelAndView modelAndView = new ModelAndView("index");
 
         var forecasts = getForecasts();
+        var meteoForecastsJson = GetMeteoForecastsJson();
+        System.out.println(meteoForecastsJson);
 
         modelAndView.addObject("forecasts", forecasts);
 
@@ -34,5 +41,21 @@ public class ForecastController {
         forecasts.add(f2);
         forecasts.add(f3);
         return forecasts;
+    }
+
+    private static String GetMeteoForecastsJson() throws IOException {
+        URL url = new URL("https://api.meteo.lt/v1/places/vilnius/forecasts/long-term");
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
+
+        StringBuilder text = new StringBuilder();
+        Scanner scanner = new Scanner(url.openStream());
+        while (scanner.hasNext()) {
+            text.append(scanner.nextLine());
+        }
+        scanner.close();
+        return text.toString();
     }
 }
