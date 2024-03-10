@@ -3,6 +3,9 @@
 package com.example.javamvcsample.controllers;
 
 import com.example.javamvcsample.models.ForecastModel;
+import com.example.javamvcsample.models.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +28,7 @@ public class ForecastController {
         var forecasts = getForecasts();
         var meteoForecastsJson = GetMeteoForecastsJson();
         System.out.println(meteoForecastsJson);
+        var meteoForecasts = GetObjectFromJson(meteoForecastsJson);
 
         modelAndView.addObject("forecasts", forecasts);
 
@@ -57,5 +61,13 @@ public class ForecastController {
         }
         scanner.close();
         return text.toString();
+    }
+
+    //https://json2csharp.com/code-converters/json-to-pojo
+    private static Root GetObjectFromJson(String json) throws JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        Root obj = om.readValue(json, Root.class);
+
+        return obj;
     }
 }
