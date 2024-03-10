@@ -26,24 +26,23 @@ public class ForecastController {
         ModelAndView modelAndView = new ModelAndView("index");
 
         var forecasts = getForecasts();
-        var meteoForecastsJson = GetMeteoForecastsJson();
-        System.out.println(meteoForecastsJson);
-        var meteoForecasts = GetObjectFromJson(meteoForecastsJson);
 
         modelAndView.addObject("forecasts", forecasts);
 
         return modelAndView;
     }
 
-    private static ArrayList<ForecastModel> getForecasts() {
+    private static ArrayList<ForecastModel> getForecasts() throws IOException {
+        var meteoForecastsJson = GetMeteoForecastsJson();
+        var meteoForecasts = GetObjectFromJson(meteoForecastsJson);
+
         var forecasts = new ArrayList<ForecastModel>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        var f1 = new ForecastModel(LocalDateTime.now().format(formatter), 1.0);
-        var f2 = new ForecastModel(LocalDateTime.now().format(formatter), 2.0);
-        var f3 = new ForecastModel(LocalDateTime.now().format(formatter), 3.0);
-        forecasts.add(f1);
-        forecasts.add(f2);
-        forecasts.add(f3);
+        for (var fr : meteoForecasts.forecastTimestamps)
+        {
+            var item = new ForecastModel(fr.forecastTimeUtc, fr.airTemperature);
+            forecasts.add(item);
+        }
+
         return forecasts;
     }
 
