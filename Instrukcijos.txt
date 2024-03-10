@@ -1,0 +1,73 @@
+# Instructions
+
+### Computer
+
+1. Įsidiegiame Git iš: https://git-scm.com/
+2. Įsidiegiame Git Client iš: https://www.sourcetreeapp.com/
+3. Įsidiegiame IntelliJ IDEA Ultimate versija iš: https://www.jetbrains.com/idea/download/?section=windows
+
+### App init
+
+
+1. New project -> Spring Initializr:
+   Type: Maven
+   JDK: 21 Oracle OpenJDK vesion 21.0.1
+   Java: 17
+   Next:
+
+Spring Boot versija (3.2.3)
+
+	Developer Tools -> Spring boot Dev Tools (auto reload ir panasiai)
+	Web -> Spring Web (MVC)
+	Template Engines -> Thymeleaf (be jo neras controleriu in viewu bei nesupras view sintakses)
+	Security -> Spring Security (reikes autentifikacijai)
+	SQL -> JDBC API (kad leistu dirbti su DB)
+	Create
+
+### GitHub
+
+1. https://github.com/
+2. Create repository: Public (Daugiau nieko nesirenkame, kad neprikurtų gailų, po to bus problemos pušinant existing git repo į jį (README failą pridėsime patys vėliau, .gitignore mūsų sukurtas projektas turės pats)).
+3. Atsidarom SourceTree -> Tools -> Options -> Authentification, prisiloginam ir padarom set as default
+(4a.) Jei nepvyksta 3 zingsnis (prisiloginti) -> atsidarom github.com -> žmogeliuko ikona -> Settings -> Developer settings (pats apatinis) -> Personal access tokens -> Tokens (classic) -> Generate new token (clasic) -> Expiration (90 days) -> uždedam visur varneles -> Generate tokens
+(4b.) Atsidarom SourceTree -> Tools -> Options -> Authentification -> Add -> pasirenkame Host - GitHub -> Credentials - Personal Access Token -> Refresh Personal Access Token -> Įvedam Github username ir ankstesniame žingsnyje sugeneruotą PAT
+
+5. project directory (C:\Users\Marius\IdeaProjects\JavaMvcSample (reikia būti tame pat folderyje kur yra .gitignore failas)): Git Bach Here (arba SourceTree Terminal):
+
+	git init (prieš tai įsitikinti ar nėra jau .git folderio, nes jis jau galėjo susikurti kai kūrėme projektą su intelliJ)
+	git remote add origin https://github.com/Marius-Kazlauskas/JavaMvcSample.git
+	git branch -M master
+
+6. Atsidarom SourceTree, nutempiam JavaMvcSample folderį į SourceTree
+7. Stage All
+8. Commit (pavadinam init)
+9. Push (master)
+	
+### Hello world
+
+1. pom.xml faile disablinam "spring-boot-starter-jdbc" ir "spring-boot-starter-security" su <!-- --> ir atsiradus M iconelei paspaudziam, kad reloadintu, mums ju dabar nereikia reikes veliau.
+2. \JavaMvcSample\src\main\java\com\example\javamvcsample Sukuriam nauja folderi/package "controllers"
+3. Jame sukuriame naują "Java Class": "ForecastController"
+
+	@Controller
+	public class ForecastController {
+		@GetMapping("/")
+		public ModelAndView index() {
+			ModelAndView modelAndView = new ModelAndView("index");
+			return modelAndView;
+		}
+	}
+
+4. Ten kur ModelAndView("index") - index yra view failo pavadinimas
+5. \JavaMvcSample\src\main\resources\templates sukuriam nauja "New HTML File" index.html
+
+	<body>
+		<div>Hello World!</div>
+	</body>
+
+6. Spaudziam play
+7. Atsidarom http://localhost:8080/
+
+### Community
+
+1. Folderį su aplikaciją galime išsisaugoti kažkur kitur kaip šabloną, reikia išbandyti - galbūt ją galima naudoti skirtingiems projektams dirbant su Community versija.
