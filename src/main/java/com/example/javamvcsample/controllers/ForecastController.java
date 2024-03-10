@@ -17,6 +17,14 @@ public class ForecastController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
 
+        var forecasts = getForecasts();
+
+        modelAndView.addObject("forecasts", forecasts);
+
+        return modelAndView;
+    }
+
+    private static ArrayList<ForecastModel> getForecasts() {
         var forecasts = new ArrayList<ForecastModel>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         var f1 = new ForecastModel(LocalDateTime.now().format(formatter), 1.0);
@@ -25,9 +33,6 @@ public class ForecastController {
         forecasts.add(f1);
         forecasts.add(f2);
         forecasts.add(f3);
-
-        modelAndView.addObject("forecasts", forecasts);
-
-        return modelAndView;
+        return forecasts;
     }
 }
