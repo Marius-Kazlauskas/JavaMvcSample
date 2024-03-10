@@ -1,3 +1,5 @@
+<!-- Ctrl+Alt+L REFORMAT CODE -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +15,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>2024-03-10 10:00</td>
-        <td>3</td>
-    </tr>
-    <tr>
-        <td>2024-03-10 11:00</td>
-        <td>5</td>
+    <tr th:each="forecast : ${forecasts}">
+        <td th:text="${forecast.dateTime}"></td>
+        <td th:text="${forecast.temperature}"></td>
     </tr>
     </tbody>
 </table>
