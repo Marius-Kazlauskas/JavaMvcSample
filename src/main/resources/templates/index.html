@@ -33,6 +33,10 @@
         </div>
     </div>
 
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Atsijungti"/>
+    </form>
+
     <form method="get">
         <select id="selected-city" name="city" onchange="this.form.submit()">
             <option value=""></option>

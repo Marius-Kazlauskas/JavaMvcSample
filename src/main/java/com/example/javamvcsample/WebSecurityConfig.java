@@ -24,6 +24,7 @@ public class WebSecurityConfig {
                 )
                 .formLogin((form) -> form
                         //.loginPage("/login") //jei norim naudoti default login puslapį šitą uždiseiblinam
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
