@@ -3,6 +3,7 @@
 package com.example.javamvcsample.controllers;
 
 import com.example.javamvcsample.models.ForecastModel;
+import com.example.javamvcsample.models.IndexModel;
 import com.example.javamvcsample.models.Root;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,17 +16,22 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 @Controller
 public class ForecastController {
     @GetMapping("/")
-    public ModelAndView index(@RequestParam(required = false) String city) throws IOException {
+    public ModelAndView index(@RequestParam(required = false, defaultValue = "") String city) throws IOException {
         ModelAndView modelAndView = new ModelAndView("index");
 
         var forecasts = getForecasts(city);
 
-        modelAndView.addObject("forecasts", forecasts);
+        var indexModel = new IndexModel();
+        indexModel.forecasts = forecasts;
+        indexModel.selectedCity = city;
+
+        modelAndView.addObject("indexModel", indexModel);
 
         return modelAndView;
     }
@@ -33,7 +39,7 @@ public class ForecastController {
     private static ArrayList<ForecastModel> getForecasts(String city) throws IOException {
         var forecasts = new ArrayList<ForecastModel>();
 
-        if (city != null) {
+        if (!Objects.equals(city, "")) {
             var meteoForecastsJson = GetMeteoForecastsJson(city);
             var meteoForecasts = GetObjectFromJson(meteoForecastsJson);
 
