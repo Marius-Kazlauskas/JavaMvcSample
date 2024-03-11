@@ -19,4 +19,14 @@ public class Forecast {
     public String temperature;
     public String city;
     public int userId;
+
+    public Forecast() {
+    }
+
+    public Forecast(String date, String temperature, String city, int userId) {
+        this.date = date;
+        this.temperature = temperature;
+        this.city = city;
+        this.userId = userId;
+    }
 }

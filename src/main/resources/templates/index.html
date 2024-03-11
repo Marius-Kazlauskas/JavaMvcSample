@@ -34,7 +34,7 @@
     </div>
 
     <form method="get">
-        <select name="city" onchange="this.form.submit()">
+        <select id="selected-city" name="city" onchange="this.form.submit()">
             <option value=""></option>
             <option value="vilnius" th:selected="${indexModel.selectedCity=='vilnius'}">Vilnius</option>
             <option value="kaunas" th:selected="${indexModel.selectedCity=='kaunas'}">Kaunas</option>
@@ -78,6 +78,7 @@
         var parent = element.parentElement.parentElement;
         var date = parent.getElementsByClassName("date")[0].textContent;
         var temperature = parent.getElementsByClassName("temperature")[0].textContent;
+        var city = $("#selected-city").val();
 
         console.log(date, ': ', temperature);
 
@@ -86,7 +87,8 @@
             type: "POST",
             data: JSON.stringify({
                 "dateTime": date,
-                "temperature": temperature
+                "temperature": temperature,
+                "city": city
             }),
             contentType: "application/json",
             success: function () {
