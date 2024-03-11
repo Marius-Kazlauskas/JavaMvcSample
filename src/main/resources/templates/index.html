@@ -33,9 +33,9 @@
         </thead>
         <tbody>
         <tr th:each="forecast : ${indexModel.forecasts}">
-            <td th:text="${forecast.dateTime}"></td>
-            <td th:text="${forecast.temperature}"></td>
-            <td><button class="btn btn-light btn-sm" onclick="save()">Save</button></td>
+            <td class="date" th:text="${forecast.dateTime}"></td>
+            <td class="temperature" th:text="${forecast.temperature}"></td>
+            <td><button class="btn btn-light btn-sm" onclick="save(this)">Save</button></td>
         </tr>
         </tbody>
     </table>
@@ -52,8 +52,12 @@
 <script>
     let table = new DataTable('#myTable');
 
-    function save() {
-        console.log('Mygtukas buvo paspaustas');
+    function save(element) {
+        var parent = element.parentElement.parentElement;
+        var date = parent.getElementsByClassName("date")[0].textContent;
+        var temperature = parent.getElementsByClassName("temperature")[0].textContent;
+
+        console.log(date, ': ', temperature);
     }
 </script>
 
