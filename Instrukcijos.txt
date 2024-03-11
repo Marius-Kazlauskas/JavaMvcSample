@@ -21,7 +21,7 @@ Spring Boot versija (3.2.3)
 	Web -> Spring Web (MVC)
 	Template Engines -> Thymeleaf (be jo neras controleriu in viewu bei nesupras view sintakses)
 	Security -> Spring Security (reikes autentifikacijai)
-	SQL -> JDBC API ir MySQL Driver (kad leistu dirbti su DB)
+	SQL -> MySQL Driver (kad leistu dirbti su DB)
 	Create
 
 ### GitHub
@@ -45,7 +45,7 @@ Spring Boot versija (3.2.3)
 	
 ### Hello world
 
-1. pom.xml faile disablinam "spring-boot-starter-jdbc" ir "spring-boot-starter-security" ir "mysql-connector-j" su <!-- --> ir atsiradus M iconelei paspaudziam, kad reloadintu, mums ju dabar nereikia reikes veliau.
+1. pom.xml faile disablinam "spring-boot-starter-security" ir "mysql-connector-j" su <!-- --> ir atsiradus M iconelei paspaudziam, kad reloadintu, mums ju dabar nereikia reikes veliau.
 2. \JavaMvcSample\src\main\java\com\example\javamvcsample Sukuriam nauja folderi/package "controllers"
 3. Jame sukuriame naują "Java Class": "ForecastController"
 
