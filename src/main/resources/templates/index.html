@@ -58,6 +58,16 @@
         var temperature = parent.getElementsByClassName("temperature")[0].textContent;
 
         console.log(date, ': ', temperature);
+
+        jQuery.ajax({
+            url: "http://localhost:8080/api/forecast",
+            type: "POST",
+            data: JSON.stringify({
+                "dateTime": date,
+                "temperature": temperature
+            }),
+            contentType: "application/json"
+        });
     }
 </script>
 
