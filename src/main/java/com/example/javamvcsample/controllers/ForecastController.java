@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -19,32 +20,34 @@ import java.util.Scanner;
 @Controller
 public class ForecastController {
     @GetMapping("/")
-    public ModelAndView index() throws IOException {
+    public ModelAndView index(@RequestParam(required = false) String city) throws IOException {
         ModelAndView modelAndView = new ModelAndView("index");
 
-        var forecasts = getForecasts();
+        var forecasts = getForecasts(city);
 
         modelAndView.addObject("forecasts", forecasts);
 
         return modelAndView;
     }
 
-    private static ArrayList<ForecastModel> getForecasts() throws IOException {
-        var meteoForecastsJson = GetMeteoForecastsJson();
-        var meteoForecasts = GetObjectFromJson(meteoForecastsJson);
-
+    private static ArrayList<ForecastModel> getForecasts(String city) throws IOException {
         var forecasts = new ArrayList<ForecastModel>();
-        for (var fr : meteoForecasts.forecastTimestamps)
-        {
-            var item = new ForecastModel(fr.forecastTimeUtc, fr.airTemperature);
-            forecasts.add(item);
+
+        if (city != null) {
+            var meteoForecastsJson = GetMeteoForecastsJson(city);
+            var meteoForecasts = GetObjectFromJson(meteoForecastsJson);
+
+            for (var fr : meteoForecasts.forecastTimestamps) {
+                var item = new ForecastModel(fr.forecastTimeUtc, fr.airTemperature);
+                forecasts.add(item);
+            }
         }
 
         return forecasts;
     }
 
-    private static String GetMeteoForecastsJson() throws IOException {
-        URL url = new URL("https://api.meteo.lt/v1/places/vilnius/forecasts/long-term");
+    private static String GetMeteoForecastsJson(String city) throws IOException {
+        URL url = new URL("https://api.meteo.lt/v1/places/" + city + "/forecasts/long-term");
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
