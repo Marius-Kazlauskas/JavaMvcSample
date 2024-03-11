@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Atsijungti"/>
+</form>
+
+<ul th:each="forecast : ${myForecasts}">
+    <li>
+        <span th:text="${forecast.date}"></span>
+        <span th:text="${forecast.temperature}"></span>
+    </li>
+</ul>
+
+</body>
+</html>

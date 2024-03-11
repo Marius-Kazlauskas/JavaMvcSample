@@ -16,6 +16,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() //shows error without this: "'csrf()' is deprecated since version 6.1 and marked for removal", todo: fix this
                 .authorizeHttpRequests((requests) -> requests
                         //.requestMatchers("/public").permitAll() //leidžiami puslapiai be prisijungimo
                         .anyRequest().authenticated()

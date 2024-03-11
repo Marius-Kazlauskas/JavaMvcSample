@@ -5,8 +5,10 @@ package com.example.javamvcsample.controllers;
 import com.example.javamvcsample.models.ForecastModel;
 import com.example.javamvcsample.models.IndexModel;
 import com.example.javamvcsample.models.Root;
+import com.example.javamvcsample.repositories.ForecastRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,9 @@ import java.util.Scanner;
 
 @Controller
 public class ForecastController {
+    @Autowired
+    private ForecastRepository forecastRepository;
+
     @GetMapping("/")
     public ModelAndView index(@RequestParam(required = false, defaultValue = "") String city) throws IOException {
         ModelAndView modelAndView = new ModelAndView("index");
@@ -34,6 +39,15 @@ public class ForecastController {
         modelAndView.addObject("indexModel", indexModel);
 
         return modelAndView;
+    }
+
+    @GetMapping("/my-forecasts")
+    public ModelAndView index() {
+        var modelAndView = new ModelAndView("myForecasts");
+        var model = forecastRepository.findAll();
+
+        modelAndView.addObject("myForecasts", model);
+        return  modelAndView;
     }
 
     private static ArrayList<ForecastModel> getForecasts(String city) throws IOException {
