@@ -28,12 +28,14 @@
         <tr>
             <th>Data</th>
             <th>Temperatūra</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="forecast : ${indexModel.forecasts}">
             <td th:text="${forecast.dateTime}"></td>
             <td th:text="${forecast.temperature}"></td>
+            <td><button class="btn btn-light btn-sm" onclick="save()">Save</button></td>
         </tr>
         </tbody>
     </table>
@@ -49,6 +51,10 @@
 <script src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
     let table = new DataTable('#myTable');
+
+    function save() {
+        console.log('Mygtukas buvo paspaustas');
+    }
 </script>
 
 </html>
